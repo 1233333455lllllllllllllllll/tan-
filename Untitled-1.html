@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galictan - Ultimate Space Travel Guide</title>
+    <style>
+        :root {
+            --primary: #0a1128;
+            --primary-light: #1a2a52;
+            --secondary: #05d5fa;
+            --accent: #f4436f;
+            --text-light: #ecf0f1;
+            --text-dark: #121212;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --card-bg: rgba(10, 17, 40, 0.8);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--primary);
+            color: var(--text-light);
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(5, 213, 250, 0.15) 0%, transparent 30%),
+                radial-gradient(circle at 80% 20%, rgba(244, 67, 111, 0.1) 0%, transparent 25%);
+            background-attachment: fixed;
+            background-size: cover;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: rgba(10, 17, 40, 0.9);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(5, 213, 250, 0.2);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--secondary);
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        .logo-icon {
+            font-size: 28px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--secondary);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary);
+            transition: width 0.3s;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .cta-button {
+            background-color: var(--accent);
+            color: var(--text-light);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(244, 67, 111, 0.4);
+        }
+        
+        .hero {
+            background-image: url('/api/placeholder/1920/1080');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg,
+                rgba(10, 17, 40, 0.9) 0%,
+                rgba(10, 17, 40, 0.5) 100%
+            );
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .secondary-button {
+            background-color: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .secondary-button:hover {
+            background-color: var(--secondary);
+            color: var(--primary);
+        }
+        
+        .section {
+            padding: 100px 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(5, 213, 250, 0.2);
+        }
+        
+        .card-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .card-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        
+        .card-text {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            opacity: 0.9;
+            flex-grow: 1;
+        }
+        
+        .card-button {
+            align-self: flex-start;
+            padding: 8px 16px;
+            background-color: rgba(5, 213, 250, 0.2);
+            color: var(--secondary);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .card-button:hover {
+            background-color: rgba(5, 213, 250, 0.4);
+        }
+        
+        .companies-section {
+            background-color: rgba(10, 17, 40, 0.7);
+            backdrop-filter: blur(10px);
+        }
+        
+        .company-card {
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .company-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--secondary);
+        }
+        
+        .company-name {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--text-light);
+        }
+        
+        .company-description {
+            opacity: 0.8;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .destinations-section {
+            position: relative;
+        }
+        
+        .destination-card {
+            position: relative;
+            height: 350px;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .destination-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.5s;
+        }
+        
+        .destination-card:hover .destination-image {
+            transform: scale(1.1);
+        }
+        
+        .destination-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px 20px;
+            background: linear-gradient(to top, rgba(10, 17, 40, 0.9), transparent);
+            transform: translateY(70px);
+            transition: transform 0.3s;
+        }
+        
+        .destination-card:hover .destination-overlay {
+            transform: translateY(0);
+        }
+        
+        .destination-name {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .destination-info {
+            opacity: 0;
+            transition: opacity 0.3s;
+            margin-bottom: 15px;
+        }
+        
+        .destination-card:hover .destination-info {
+            opacity: 1;
+        }
+        
+        .destination-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        .features-section {
+            position: relative;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 40px;
+        }
+        
+        .feature-icon {
+            flex-shrink: 0;
+            width: 60px;
+            height: 60px;
+            background-color: rgba(5, 213, 250, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 25px;
+            color: var(--secondary);
+            font-size: 1.5rem;
+        }
+        
+        .feature-content {
+            flex-grow: 1;
+        }
+        
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--text-light);
+        }
+        
+        .feature-description {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+        
+        .testimonials-section {
+            background-color: var(--primary-light);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .testimonials-container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial {
+            background-color: rgba(26, 42, 82, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .testimonial-content {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .testimonial-content::before {
+            content: '"';
+            font-size: 4rem;
+            position: absolute;
+            top: -20px;
+            left: -10px;
+            color: rgba(5, 213, 250, 0.2);
+            font-family: serif;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            background-image: url('/api/placeholder/50/50');
+            background-size: cover;
+        }
+        
+        .author-info h4 {
+            margin-bottom: 5px;
+        }
+        
+        .author-info p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        .cta-section {
+            text-align: center;
+            padding: 120px 0;
+            background-image: linear-gradient(135deg, rgba(10, 17, 40, 0.9), rgba(26, 42, 82, 0.9)), url('/api/placeholder/1920/1080');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        .cta-title {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta-text {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            opacity: 0.9;
+        }
+        
+        footer {
+            background-color: var(--primary);
+            padding: 80px 0 30px;
+            position: relative;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        
+        .footer-logo span {
+            color: var(--accent);
+        }
+        
+        .footer-description {
+            margin-bottom: 25px;
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: var(--secondary);
+        }
+        
+        .footer-title {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: var(--text-light);
+            opacity: 0.8;
+            text-decoration: none;
+            transition: opacity 0.3s, color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--secondary);
+        }
+        
+        .contact-info {
+            list-style: none;
+        }
+        
+        .contact-info li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .contact-icon {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            text-align: center;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section {
+                padding: 60px 0;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .cta-button, .secondary-button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="navbar">
+                <a href="#" class="logo">
+                    <i class="fas fa-rocket logo-icon"></i>
+                    Galic<span>tan</span>
+                </a>
+                <nav>
+                    <ul>
+                        <li><a href="#destinations">Destinations</a></li>
+                        <li><a href="#companies">Companies</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                    </ul>
+                </nav>
+                <button class="cta-button">Book Your Journey</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Your Ultimate Guide to Space Travel</h1>
+                <p>Explore the cosmos with confidence. Galictan provides comprehensive information about space travel, destinations, and everything you need to know for your interstellar adventures.</p>
+                <div class="hero-buttons">
+                    <button class="cta-button">Start Exploring</button>
+                    <button class="secondary-button">Learn More</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="destinations" class="section destinations-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Popular Destinations</h2>
+                <p class="section-subtitle">Discover the most breathtaking locations across our solar system and beyond.</p>
+            </div>
+            <div class="cards-container">
+                <div class="destination-card">
+                    <div class="destination-image" style="background-image: url('/api/placeholder/600/400')"></div>
+                    <div class="destination-overlay">
+                        <h3 class="destination-name">Lunar Colony Alpha</h3>
+                        <p class="destination-info">The first permanent human settlement on the Moon, offering exceptional Earth views and low-gravity experiences.</p>
+                        <div class="destination-stats">
+                            <div class="stat">
+                                <div class="stat-value">3 days</div>
+                                <div class="stat-label">Travel Time</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">$250,000</div>
+                                <div class="stat-label">Starting Price</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">⭐⭐⭐⭐⭐</div>
+                                <div class="stat-label">Rating</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <div class="destination-image" style="background-image: url('/api/placeholder/600/400')"></div>
+                    <div class="destination-overlay">
+                        <h3 class="destination-name">Mars Base One</h3>
+                        <p class="destination-info">Experience the red planet's rugged terrain and contribute to humanity's first interplanetary colony.</p>
+                        <div class="destination-stats">
+                            <div class="stat">
+                                <div class="stat-value">6 months</div>
+                                <div class="stat-label">Travel Time</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">$750,000</div>
+                                <div class="stat-label">Starting Price</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">⭐⭐⭐⭐</div>
+                                <div class="stat-label">Rating</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <div class="destination-image" style="background-image: url('/api/placeholder/600/400')"></div>
+                    <div class="destination-overlay">
+                        <h3 class="destination-name">Europa Research Station</h3>
+                        <p class="destination-info">Explore Jupiter's moon and its vast subsurface ocean, a frontier for astrobiology research.</p>
+                        <div class="destination-stats">
+                            <div class="stat">
+                                <div class="stat-value">2.5 years</div>
+                                <div class="stat-label">Travel Time</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">$2.5M</div>
+                                <div class="stat-label">Starting Price</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">⭐⭐⭐⭐⭐</div>
+                                <div class="stat-label">Rating</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="companies" class="section companies-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Space Travel Companies</h2>
+                <p class="section-subtitle">Compare services from leading space transportation providers to find your perfect journey.</p>
+            </div>
+            <div class="cards-container">
+                <div class="card company-card">
+                    <div class="company-logo">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3 class="company-name">SpaceX</h3>
+                    <p class="company-description">Pioneering reusable rocket technology and regular flights to Mars, SpaceX offers a variety of space travel options for both tourists and colonists.</p>
+                    <a href="#" class="card-button">View Details</a>
+                </div>
+                <div class="card company-card">
+                    <div class="company-logo">
+                        <i class="fas fa-space-shuttle"></i>
+                    </div>
+                    <h3 class="company-name">Blue Origin</h3>
+                    <p class="company-description">Specializing in space tourism and orbital habitats, Blue Origin provides luxury experiences with a focus on safety and comfort.</p>
+                    <a href="#" class="card-button">View Details</a>
+                </div>
+                <div class="card company-card">
+                    <div class="company-logo">
+                        <i class="fas fa-satellite"></i>
+                    </div>
+                    <h3 class="company-name">Orbital Assembly</h3>
+                    <p class="company-description">The creators of the first space hotels, offering rotating habitats with artificial gravity and unparalleled views of Earth and beyond.</p>
+                    <a href="#" class="card-button">View Details</a>
+                </div>
+                <div class="card company-card">
+                    <div class="company-logo">
+                        <i class="fas fa-user-astronaut"></i>
+                    </div>
+                    <h3 class="company-name">Virgin Galactic</h3>
+                    <p class="company-description">Providing suborbital flights and low Earth orbit experiences with a focus on entertainment and the "space tourism" experience.</p>
+                    <a href="#" class="card-button">View Details</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="section features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Why Choose Galictan</h2>
+                <p class="section-subtitle">Our comprehensive guide gives you everything you need for successful space travel.</p>
+            </div>
+            <div class="row">
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3 class="feature-title">Safety Ratings & Reviews</h3>
+                        <p class="feature-description">Compare safety records and passenger reviews for all major space travel providers to make informed decisions about your journey.</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3 class="feature-title">Health Preparation</h3>
+                        <p class="feature-description">Comprehensive guides to prepare your body for microgravity, radiation exposure, and other space-related health challenges.</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3 class="feature-title">Interactive Travel Planner</h3>
+                        <p class="feature-description">Plan your journey with our interactive tool that calculates optimal launch windows, travel durations, and suggests the best accommodation options.</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3 class="feature-title">Virtual Tours</h3>
+                        <p class="feature-description">Experience your destination before you go with our immersive virtual tours of space habitats, colonies, and natural wonders across the solar system.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="section testimonials-section">
+        <div class="container testimonials-container">
+            <div class="section-header">
+                <h2 class="section-title">Space Traveler Testimonials</h2>
+                <p class="section-subtitle">Hear from those who have used Galictan to plan their cosmic adventures.</p>
+            </div>
+            <div class="cards-container">
+                <div class="card testimonial">
+                    <div class="testimonial-content">
+                        Galictan was indispensable for planning my lunar vacation. Their comprehensive guides about low-gravity adaptation saved me from days of space sickness. I was able to enjoy Tranquility Base from day one!
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"></div>
+                        <div class="author-info">
+                            <h4>Sarah Johnson</h4>
+                            <p>Lunar Tourist, 2030</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card testimonial">
+                    <div class="testimonial-content">
+                        As a Mars colonist, I relied heavily on Galictan's comparisons of different transportation providers. The accuracy of their radiation exposure data helped me choose the safest option for my one-way journey.
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"></div>
+                        <div class="author-info">
+                            <h4>Marcus Chen</h4>
+                            <p>Mars Colonist, 2029</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card testimonial">
+                    <div class="testimonial-content">
+                        The virtual tours feature allowed our family to experience the Europa Research Station before committing to a 5-year research position
